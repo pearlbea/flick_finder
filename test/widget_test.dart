@@ -12,7 +12,7 @@ import 'package:flick_finder/home.dart';
 
 void main() {
   testWidgets('HomePage test', (WidgetTester tester) async {
-    HomePage homePage = HomePage();
+    final HomePage homePage = HomePage();
     await tester.pumpWidget(MaterialApp(home: homePage));
     expect(find.text('flick finder'), findsOneWidget);
   });
