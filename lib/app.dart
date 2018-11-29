@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'home.dart';
+import 'ui/home.dart';
 
 class FlickFinder extends StatelessWidget {
   @override
