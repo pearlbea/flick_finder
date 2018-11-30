@@ -10,17 +10,19 @@ const String size = 'w154';
 
 // TODO store results in a variable to avoid repeat calls
 
-String constructUrl(String apiKey) {
-  return '$baseUrl/discover/movie?api_key=$apiKey';
-}
+class MovieService {
+  static String constructUrl(String apiKey) {
+    return '$baseUrl/discover/movie?api_key=$apiKey';
+  }
 
-String getPosterPath(String posterId) {
-  return '$basePosterPath$size/$posterId';
-}
+  static String getPosterPath(String posterId) {
+    return '$basePosterPath$size/$posterId';
+  }
 
-Future<Movies> getMovies() async {
-  return getApiKey()
-      .then((String apiKey) => constructUrl(apiKey))
-      .then((String url) => http.get(url))
-      .then((dynamic response) => moviesFromJson(response.body));
+  static Future<Movies> getMovies() async {
+    return getApiKey()
+        .then((String apiKey) => constructUrl(apiKey))
+        .then((String url) => http.get(url))
+        .then((http.Response response) => moviesFromJson(response.body));
+  }
 }

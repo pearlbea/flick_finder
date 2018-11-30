@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
         title: const Text('flick finder'),
       ),
       body: FutureBuilder<Movies>(
-          future: getMovies(),
+          future: MovieService.getMovies(),
           builder: (BuildContext context, AsyncSnapshot<Movies> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
