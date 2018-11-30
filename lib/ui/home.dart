@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flick_finder/model/movies.dart';
 import 'package:flick_finder/movie_service.dart';
+import 'package:flick_finder/ui/movie_card.dart';
 
 class HomePage extends StatelessWidget {
   List<Widget> _buildGridCards(
@@ -8,23 +9,7 @@ class HomePage extends StatelessWidget {
     final List<Result> movies = snapshot.data.results;
 
     return movies.map((Result movie) {
-      return Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Image.network(getPosterPath(movie.posterPath)),
-            Container(
-              child: Text(
-                movie.title,
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
-                softWrap: true,
-              ),
-              padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
-            ),
-          ],
-        ),
-      );
+      return MovieCard(movie);
     }).toList();
   }
 
