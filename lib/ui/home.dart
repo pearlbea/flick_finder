@@ -4,11 +4,10 @@ import 'package:flick_finder/movie_service.dart';
 import 'package:flick_finder/ui/movie_card.dart';
 
 class HomePage extends StatelessWidget {
-  List<Widget> _buildGridCards(
-      BuildContext context, AsyncSnapshot<Movies> snapshot) {
-    final List<Result> movies = snapshot.data.results;
+  Future<Movies> movieList = MovieService().getMovies();
 
-    return movies.map((Result movie) {
+  List<Widget> _buildGridCards(BuildContext context, Movies movies) {
+    return movies.results.map((Result movie) {
       return MovieCard(movie);
     }).toList();
   }
@@ -24,7 +23,7 @@ class HomePage extends StatelessWidget {
         title: const Text('flick finder'),
       ),
       body: FutureBuilder<Movies>(
-          future: MovieService.getMovies(),
+          future: movieList,
           builder: (BuildContext context, AsyncSnapshot<Movies> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -39,7 +38,7 @@ class HomePage extends StatelessWidget {
                     crossAxisCount: 3,
                     childAspectRatio: itemWidth / itemHeight,
                     padding: const EdgeInsets.all(12.0),
-                    children: _buildGridCards(context, snapshot),
+                    children: _buildGridCards(context, snapshot.data),
                   );
                 }
             }

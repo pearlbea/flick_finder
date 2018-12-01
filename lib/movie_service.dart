@@ -8,21 +8,27 @@ const String basePosterPath = 'https://image.tmdb.org/t/p/';
 const String baseUrl = 'https://api.themoviedb.org/3';
 const String size = 'w154';
 
-// TODO store results in a variable to avoid repeat calls
-
 class MovieService {
-  static String constructUrl(String apiKey) {
+  Future<Movies> movieList;
+
+  String constructUrl(String apiKey) {
     return '$baseUrl/discover/movie?api_key=$apiKey';
   }
 
-  static String getPosterPath(String posterId) {
+  String getPosterPath(String posterId) {
     return '$basePosterPath$size/$posterId';
   }
 
-  static Future<Movies> getMovies() async {
-    return getApiKey()
+  Future<Movies> getMovies() async {
+    if (movieList != null) {
+      return movieList;
+    }
+
+    movieList = getApiKey()
         .then((String apiKey) => constructUrl(apiKey))
         .then((String url) => http.get(url))
         .then((http.Response response) => moviesFromJson(response.body));
+
+    return movieList;
   }
 }
