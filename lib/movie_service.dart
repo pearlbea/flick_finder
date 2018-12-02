@@ -4,9 +4,10 @@ import 'package:http/http.dart' as http;
 import 'app_config.dart';
 import 'model/movies.dart';
 
-const String basePosterPath = 'https://image.tmdb.org/t/p/';
+const String baseImagePath = 'https://image.tmdb.org/t/p/';
 const String baseUrl = 'https://api.themoviedb.org/3';
-const String size = 'w154';
+const String posterSize = 'w154';
+const String backdropSize = 'w780';
 
 class MovieService {
   Future<Movies> movieList;
@@ -16,7 +17,11 @@ class MovieService {
   }
 
   String getPosterPath(String posterId) {
-    return '$basePosterPath$size/$posterId';
+    return '$baseImagePath$posterSize/$posterId';
+  }
+
+  String getBackdropPath(String imageId) {
+    return '$baseImagePath$backdropSize/$imageId';
   }
 
   Future<Movies> getMovies() async {

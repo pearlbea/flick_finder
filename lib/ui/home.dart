@@ -4,7 +4,7 @@ import 'package:flick_finder/movie_service.dart';
 import 'package:flick_finder/ui/movie_card.dart';
 
 class HomePage extends StatelessWidget {
-  Future<Movies> movieList = MovieService().getMovies();
+  final Future<Movies> movieList = MovieService().getMovies();
 
   List<Widget> _buildGridCards(BuildContext context, Movies movies) {
     return movies.results.map((Result movie) {
