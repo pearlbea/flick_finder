@@ -10,6 +10,9 @@ class FlickFinder extends StatelessWidget {
       home: HomePage(),
       initialRoute: '/home',
       onGenerateRoute: _getRoute,
+      theme: ThemeData.light().copyWith(
+        primaryColor: Colors.black,
+      ),
     );
   }
 

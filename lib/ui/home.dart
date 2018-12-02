@@ -1,30 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flick_finder/model/movies.dart';
 import 'package:flick_finder/movie_service.dart';
+import 'package:flick_finder/ui/movie_card.dart';
 
 class HomePage extends StatelessWidget {
-  List<Widget> _buildGridCards(
-      BuildContext context, AsyncSnapshot<Movies> snapshot) {
-    final List<Result> movies = snapshot.data.results;
+  final Future<Movies> movieList = MovieService().getMovies();
 
-    return movies.map((Result movie) {
-      return Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Image.network(getPosterPath(movie.posterPath)),
-            Container(
-              child: Text(
-                movie.title,
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
-                softWrap: true,
-              ),
-              padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
-            ),
-          ],
-        ),
-      );
+  List<Widget> _buildGridCards(BuildContext context, Movies movies) {
+    return movies.results.map((Result movie) {
+      return MovieCard(movie);
     }).toList();
   }
 
@@ -32,14 +16,14 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final double itemHeight = size.height / 2;
-    final double itemWidth = size.width / 2;
+    final double itemWidth = size.width / 1.36;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('flick finder'),
       ),
       body: FutureBuilder<Movies>(
-          future: getMovies(),
+          future: movieList,
           builder: (BuildContext context, AsyncSnapshot<Movies> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -54,7 +38,7 @@ class HomePage extends StatelessWidget {
                     crossAxisCount: 3,
                     childAspectRatio: itemWidth / itemHeight,
                     padding: const EdgeInsets.all(12.0),
-                    children: _buildGridCards(context, snapshot),
+                    children: _buildGridCards(context, snapshot.data),
                   );
                 }
             }
