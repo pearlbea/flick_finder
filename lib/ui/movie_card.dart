@@ -9,7 +9,7 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         Navigator.of(context).push<dynamic>(
             MaterialPageRoute<dynamic>(builder: (BuildContext context) {
@@ -20,15 +20,10 @@ class MovieCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.network(MovieService.getPosterPath(movie.posterPath)),
-            Container(
-              child: Text(
-                movie.title,
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
-                softWrap: true,
-              ),
-              padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
+            Hero(
+              tag: movie.title,
+              child:
+                  Image.network(MovieService().getPosterPath(movie.posterPath)),
             ),
           ],
         ),

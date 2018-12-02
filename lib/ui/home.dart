@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final double itemHeight = size.height / 2;
-    final double itemWidth = size.width / 2;
+    final double itemWidth = size.width / 1.36;
 
     return Scaffold(
       appBar: AppBar(
