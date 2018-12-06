@@ -5,11 +5,6 @@ Movies moviesFromJson(String str) {
   return Movies.fromJson(jsonData);
 }
 
-String moviesToJson(Movies data) {
-  final dynamic dyn = data.toJson();
-  return json.encode(dyn);
-}
-
 class Movies {
   Movies({
     this.page,
@@ -30,13 +25,6 @@ class Movies {
   int totalResults;
   int totalPages;
   List<Result> results;
-
-  Map<String, dynamic> toJson() => {
-        'page': page,
-        'total_results': totalResults,
-        'total_pages': totalPages,
-        'results': List<dynamic>.from(results.map((x) => x.toJson())),
-      };
 }
 
 class Result {
@@ -88,23 +76,6 @@ class Result {
         overview: json['overview'],
         releaseDate: json['release_date'],
       );
-
-  Map<String, dynamic> toJson() => {
-        'vote_count': voteCount,
-        'id': id,
-        'video': video,
-        'vote_average': voteAverage,
-        'title': title,
-        'popularity': popularity,
-        'poster_path': posterPath,
-        'original_language': originalLanguageValues.reverse[originalLanguage],
-        'original_title': originalTitle,
-        'genre_ids': List<dynamic>.from(genreIds.map((x) => x)),
-        'backdrop_path': backdropPath,
-        'adult': adult,
-        'overview': overview,
-        'release_date': releaseDate,
-      };
 }
 
 enum OriginalLanguage { EN }
