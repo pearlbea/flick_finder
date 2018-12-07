@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flick_finder/ui/movie_grid.dart';
+import 'package:flick_finder/ui/genre_grid.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Expanded(child: MovieGrid()),
+          Expanded(child: GenreGrid()),
         ],
       ),
     );
