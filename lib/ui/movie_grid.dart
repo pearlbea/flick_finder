@@ -22,6 +22,7 @@ class MovieGrid extends StatelessWidget {
     final double itemWidth = size.width / 1.36;
 
     return Scaffold(
+      appBar: AppBar(),
       body: FutureBuilder<Movies>(
           future: movieList,
           builder: (BuildContext context, AsyncSnapshot<Movies> snapshot) {
@@ -29,7 +30,10 @@ class MovieGrid extends StatelessWidget {
               case ConnectionState.none:
                 return const Text('none..');
               case ConnectionState.waiting:
-                return const Text('waiting...');
+                return const Center(
+                    child: CircularProgressIndicator(
+                  backgroundColor: Colors.indigo,
+                ));
               default:
                 if (snapshot.hasError) {
                   return Text('error: $snapshot.error');

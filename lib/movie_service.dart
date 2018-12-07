@@ -6,14 +6,16 @@ import 'app_config.dart';
 import 'model/genre_list.dart';
 import 'model/movies.dart';
 
-const String baseImagePath = 'https://image.tmdb.org/t/p/';
-const String baseUrl = 'https://api.themoviedb.org/3';
-const String posterSize = 'w154';
-const String backdropSize = 'w780';
+Map<int, Future<Movies>> moviesByGenre = <int, Future<Movies>>{};
+Future<GenreList> genreList;
 
 class MovieService {
+  static const String baseImagePath = 'https://image.tmdb.org/t/p/';
+  static const String baseUrl = 'https://api.themoviedb.org/3';
+  static const String posterSize = 'w154';
+  static const String backdropSize = 'w780';
+
   Future<String> apiKey;
-  Future<GenreList> genreList;
   Future<Movies> movieList;
 
   String constructUrl(
@@ -55,13 +57,19 @@ class MovieService {
   }
 
   Future<Movies> getMovies(Genre genre) async {
-    print(genre.id);
+    if (moviesByGenre[genre.id] != null) {
+      return moviesByGenre[genre.id];
+    }
 
-    movieList = loadAPIkey()
-        .then((String apiKey) => constructUrl(
-            apiKey: apiKey, path: 'discover/movie', genreId: genre.id))
-        .then((String url) => http.get(url))
+    final String apiKey = await loadAPIkey();
+    final String url =
+        constructUrl(apiKey: apiKey, path: 'discover/movie', genreId: genre.id);
+
+    movieList = http
+        .get(url)
         .then((http.Response response) => moviesFromJson(response.body));
+
+    moviesByGenre[genre.id] = movieList;
 
     return movieList;
   }
