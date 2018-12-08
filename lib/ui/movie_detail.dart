@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../movie_service.dart';
+import 'star_button.dart';
 
 class MovieDetail extends StatelessWidget {
   const MovieDetail(this.movie);
@@ -28,7 +29,21 @@ class MovieDetail extends StatelessWidget {
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(24.0),
-                  child: Text(movie.title, style: theme.textTheme.headline),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(movie.title, style: theme.textTheme.headline),
+                            Text(movie.releaseDate.split('-')[0],
+                                style: theme.textTheme.caption),
+                          ],
+                        ),
+                      ),
+                      StarButton(),
+                    ],
+                  ),
                 ),
               ),
             ]),
